@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,12 +15,13 @@ const Login = () => {
       ...prev,
       [name]: value
     }));
+    setError(''); // Clear error when user types
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5001/api/login', {
+      const response = await fetch('http://localhost:5001/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,9 +29,14 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      console.log(data);
+      if (response.ok) {
+        console.log('Login successful:', data);
+        // Add logic to store token/user data
+      } else {
+        setError(data.message || 'Login failed');
+      }
     } catch (error) {
-      console.error('Login error:', error);
+      setError('Login failed. Please try again.');
     }
   };
 
@@ -79,6 +88,11 @@ const Login = () => {
             </div>
           </div>
 
+          {error && (
+            <div className="text-center text-sm text-red-600">
+              {error}
+            </div>
+          )}
           <div>
             <button
               type="submit"
@@ -88,6 +102,16 @@ const Login = () => {
             </button>
           </div>
         </form>
+
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Don't have an account?{' '}
+          <button
+            onClick={() => navigate('/signup')}
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Sign up here
+          </button>
+        </p>
       </div>
     </div>
   );

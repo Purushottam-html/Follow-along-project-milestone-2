@@ -101,3 +101,27 @@ In this milestone, we enhanced the user authentication system with the following
    - Set up file storage and filtering for image uploads
    - Implemented file size and type restrictions
    - Added error handling for upload failures
+
+---
+### Milestone 5 Summary
+In this milestone, we enhanced the user interface by implementing a complete user registration system with form validation:
+
+1. **SignUp Component Implementation**
+  - Created a new SignUp page with form fields for name, email, and password
+  - Added client-side form validation for all input fields
+  - Implemented password confirmation matching
+  - Integrated with the backend registration API endpoint
+
+2. **Form Validation Features**
+  - Email format validation
+  - Password strength requirements (minimum 6 characters)
+  - Real-time validation feedback
+  - Error message display for failed submissions
+
+3. **Navigation Implementation**
+  - Added React Router for page navigation
+  - Implemented seamless switching between Login and SignUp pages
+  - Added navigation links for better user experience
+  - Redirect to login after successful registration
+
+These enhancements provide a more robust and user-friendly authentication system, ensuring data validity before submission to the backend.
