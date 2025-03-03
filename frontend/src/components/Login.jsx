@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5001/api/users/login', {
+      const response = await fetch('http://localhost:5000/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,8 +30,10 @@ const Login = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log('Login successful:', data);
-        // Add logic to store token/user data
+        // Store user data in localStorage
+        localStorage.setItem('userData', JSON.stringify(data));
+        // Navigate to home/dashboard
+        navigate('/');
       } else {
         setError(data.message || 'Login failed');
       }
