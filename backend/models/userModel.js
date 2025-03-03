@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Name is required'],
     trim: true,
   },
+  profileImage: {
+    type: String,
+    default: null
+  },
 }, {
   timestamps: true,
 });
