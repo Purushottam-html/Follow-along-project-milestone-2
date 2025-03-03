@@ -3,17 +3,27 @@
 ## Project Structure
 ```
 ├── backend/
-│   ├── server.js          # Express server with CORS and basic routes
-│   └── package.json       # Backend dependencies
+│   ├── config/
+│   │   └── db.js           # MongoDB connection setup
+│   ├── controllers/
+│   │   └── userController.js # User authentication logic
+│   ├── middleware/
+│   │   └── errorMiddleware.js # Error handling middleware
+│   ├── models/
+│   │   └── userModel.js    # User database model
+│   ├── routes/
+│   │   └── userRoutes.js   # User API routes
+│   ├── server.js           # Express server with CORS and routes
+│   └── package.json        # Backend dependencies
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   └── Login.jsx  # Login form component
-│   │   ├── App.jsx        # Main application component
-│   │   └── main.jsx       # Application entry point
-│   ├── vite.config.js     # Vite configuration
-│   └── package.json       # Frontend dependencies
-└── .gitignore            # Git ignore configuration
+│   │   │   └── Login.jsx   # Login form component
+│   │   ├── App.jsx         # Main application component
+│   │   └── main.jsx        # Application entry point
+│   ├── vite.config.js      # Vite configuration
+│   └── package.json        # Frontend dependencies
+└── .gitignore             # Git ignore configuration
 ```
 
 ## Features Implemented
@@ -72,32 +82,6 @@
 ---
 ### Milestone 3 Summary
 In this milestone, we expanded on the initial backend setup by integrating MongoDB for database management. We introduced a user authentication system, including login and registration endpoints. Error handling middleware was added to improve robustness. The frontend remains integrated with the backend, ensuring smooth user interactions. Moving forward, we aim to implement protected routes and session management for enhanced security.
-
-## Project Structure
-```
-├── backend/
-│   ├── config/
-│   │   └── db.js           # MongoDB connection setup
-│   ├── controllers/
-│   │   └── userController.js # User authentication logic
-│   ├── middleware/
-│   │   └── errorMiddleware.js # Error handling middleware
-│   ├── models/
-│   │   └── userModel.js    # User database model
-│   ├── routes/
-│   │   └── userRoutes.js   # User API routes
-│   ├── server.js           # Express server with CORS and routes
-│   └── package.json        # Backend dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── Login.jsx   # Login form component
-│   │   ├── App.jsx         # Main application component
-│   │   └── main.jsx        # Application entry point
-│   ├── vite.config.js      # Vite configuration
-│   └── package.json        # Frontend dependencies
-└── .gitignore             # Git ignore configuration
-```
 
 ---
 ### Milestone 4 Summary
