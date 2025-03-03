@@ -21,6 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('Attempting login with:', { email: formData.email });
       const response = await fetch('http://localhost:5000/api/users/login', {
         method: 'POST',
         headers: {
@@ -28,17 +29,22 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
       });
+
       const data = await response.json();
+      console.log('Response status:', response.status);
+      console.log('Response data:', data);
+
       if (response.ok) {
-        // Store user data in localStorage
         localStorage.setItem('userData', JSON.stringify(data));
-        // Navigate to home/dashboard
+        console.log('Login successful, navigating to home');
         navigate('/');
       } else {
-        setError(data.message || 'Login failed');
+        console.log('Login failed:', data.message);
+        setError(data.message || 'Invalid credentials');
       }
     } catch (error) {
-      setError('Login failed. Please try again.');
+      console.error('Login error:', error);
+      setError('Server connection error. Please try again.');
     }
   };
 
