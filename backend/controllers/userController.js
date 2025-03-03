@@ -3,24 +3,29 @@ import User from '../models/userModel.js';
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
+    console.log('Login attempt for email:', email);
     const user = await User.findOne({ email });
 
     if (!user) {
+      console.log('User not found:', email);
       res.status(401);
       throw new Error('Invalid email or password');
     }
 
+    console.log('User found, verifying password');
     const isPasswordMatch = await user.matchPassword(password);
 
     if (!isPasswordMatch) {
+      console.log('Password mismatch for user:', email);
       res.status(401);
       throw new Error('Invalid email or password');
     }
 
+    console.log('Login successful for user:', email);
     res.json({
       _id: user._id,
       name: user.name,
@@ -29,8 +34,8 @@ const loginUser = async (req, res) => {
       message: 'Login successful'
     });
   } catch (error) {
-    res.status(401);
-    throw new Error('Invalid email or password');
+    console.error('Login error:', error);
+    next(error); // Pass error to error handling middleware
   }
 };
 
