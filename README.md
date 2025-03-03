@@ -36,6 +36,8 @@
 - [x] MongoDB database connection
 - [x] User model and authentication routes
 - [x] Error handling middleware
+- [x] Password encryption with bcrypt
+- [x] Secure password comparison for login
 
 ## Technologies Used
 - **Backend**
@@ -43,6 +45,7 @@
   - Express
   - MongoDB
   - CORS middleware
+  - bcrypt
 
 - **Frontend**
   - React
@@ -125,3 +128,24 @@ In this milestone, we enhanced the user interface by implementing a complete use
   - Redirect to login after successful registration
 
 These enhancements provide a more robust and user-friendly authentication system, ensuring data validity before submission to the backend.
+
+---
+### Milestone 6 Summary
+In this milestone, we enhanced the security of the application by implementing password encryption:
+
+1. **Password Security Implementation**
+   - Integrated bcrypt for secure password hashing
+   - Implemented pre-save middleware for automatic password encryption
+   - Added password comparison method for secure login verification
+
+2. **User Authentication Enhancements**
+   - Updated login system to use secure password comparison
+   - Implemented proper error handling for authentication failures
+   - Enhanced user data protection by not exposing sensitive information
+
+3. **Data Security Improvements**
+   - Passwords are now stored as encrypted hashes in the database
+   - Implemented secure password comparison during login
+   - Enhanced error messages for better security and user experience
+
+These security enhancements ensure that user data is stored and handled securely, following industry best practices for password management and user authentication.

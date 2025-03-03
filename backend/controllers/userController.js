@@ -7,12 +7,26 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // For now, just return success (we'll implement actual authentication later)
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(401);
+      throw new Error('Invalid email or password');
+    }
+
+    const isPasswordMatch = await user.matchPassword(password);
+
+    if (!isPasswordMatch) {
+      res.status(401);
+      throw new Error('Invalid email or password');
+    }
+
     res.json({
-      message: 'Login successful',
-      user: {
-        email,
-      },
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      profileImage: user.profileImage,
+      message: 'Login successful'
     });
   } catch (error) {
     res.status(401);
