@@ -170,3 +170,24 @@ In this milestone, we implemented a complete login system with secure password v
    - Implemented proper HTTP status codes for different scenarios
 
 These enhancements complete our authentication system with secure login functionality, proper error handling, and secure password verification.
+
+---
+### Milestone 8 Summary
+In this milestone, we implemented a reusable card component and homepage layout:
+
+1. **Card Component Creation**
+   - Created reusable ProductCard component for displaying product information
+   - Implemented props for dynamic product data (name, image, price, etc.)
+   - Added interactive features like hover effects and stock status indicators
+
+2. **Homepage Layout Implementation**
+   - Set up responsive grid layout using Tailwind CSS
+   - Implemented array mapping to display multiple product cards
+   - Created sample product data structure for testing
+
+3. **Dynamic Data Handling**
+   - Used React props for flexible data passing
+   - Maintained consistent card design across all products
+   - Added visual indicators for special statuses (New, Discount)
+
+These implementations provide an organized and visually appealing way to showcase products while maintaining code reusability and consistency.

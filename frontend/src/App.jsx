@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import HomePage from './components/HomePage.jsx';
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/homepage" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="/homepage" replace />} />
         </Routes>
       </div>
     </BrowserRouter>
