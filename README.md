@@ -243,3 +243,24 @@ In this milestone, we implemented the backend product schema and API endpoint fo
    - Ensured proper HTTP status codes for responses
 
 This implementation establishes a robust backend foundation for product management, ensuring data integrity through validation and proper error handling.
+
+---
+### Milestone 11 Summary
+In this milestone, we implemented dynamic product display by connecting the frontend to our product API:
+
+1. **Backend API Enhancement**
+   - Created a GET endpoint at `/api/products` to fetch all products
+   - Implemented logic to retrieve products from MongoDB
+   - Added proper error handling and response formatting
+
+2. **Frontend Integration**
+   - Updated HomePage component to fetch products from the API
+   - Implemented useEffect hook for data fetching on component mount
+   - Integrated error handling for failed API requests
+
+3. **Dynamic Product Display**
+   - Modified ProductCard component to match MongoDB data structure
+   - Updated component props to use MongoDB field names
+   - Implemented dynamic rendering of product data from the API
+
+These implementations create a seamless flow of data from the database to the user interface, allowing for dynamic display of products that were added through the product creation form.

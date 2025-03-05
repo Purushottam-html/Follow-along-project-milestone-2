@@ -4,43 +4,23 @@ import Navbar from '../components/NavbarComponent.jsx';
 import ProductCard from '../components/ProductCard';
 
 const HomePage = () => {
-  // Sample featured products - in a real app, these would come from an API
-  const [featuredProducts, setFeaturedProducts] = useState([
-    {
-      id: 1,
-      name: "Demon Slayer Tanjiro Figure",
-      image: "/api/placeholder/300/300",
-      price: 49.99,
-      description: "High-quality Tanjiro Kamado action figure with detailed sword and water breathing effects.",
-      inStock: true,
-      isNew: true
-    },
-    {
-      id: 2,
-      name: "My Hero Academia Hoodie",
-      image: "/api/placeholder/300/300",
-      price: 39.99,
-      description: "Comfortable U.A. High School themed hoodie featuring the school emblem.",
-      inStock: true,
-      discount: 15
-    },
-    {
-      id: 3,
-      name: "Attack on Titan Wall Scroll",
-      image: "/api/placeholder/300/300",
-      price: 24.99,
-      description: "Large fabric wall scroll featuring the Survey Corps emblem.",
-      inStock: false
-    },
-    {
-      id: 4,
-      name: "One Piece Mugiwara Hat",
-      image: "/api/placeholder/300/300",
-      price: 29.99,
-      description: "Replica of Luffy's iconic straw hat from One Piece.",
-      inStock: true
-    }
-  ]);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/products');
+        const data = await response.json();
+        if (data.success) {
+          setProducts(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   // Sample anime collections
   const collections = [
@@ -86,8 +66,8 @@ const HomePage = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
+          {products.map(product => (
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       </div>
