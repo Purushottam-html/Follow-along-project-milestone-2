@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/NavbarComponent.jsx';
 import ProductCard from '../components/ProductCard';
 
-const HomePage = () => {
+const HomePage = ({ userEmail }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
+      <Navbar userEmail={userEmail} />
       
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-purple-900 to-pink-800 text-white">

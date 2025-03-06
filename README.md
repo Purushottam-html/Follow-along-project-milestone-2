@@ -264,3 +264,27 @@ In this milestone, we implemented dynamic product display by connecting the fron
    - Implemented dynamic rendering of product data from the API
 
 These implementations create a seamless flow of data from the database to the user interface, allowing for dynamic display of products that were added through the product creation form.
+
+---
+### Milestone 12 Summary
+In this milestone, we implemented user-specific product filtering and display:
+
+1. **Backend Enhancement**
+   - Added userEmail field to Product schema
+   - Created new endpoint `/api/products/user/:email` for filtering products by user
+   - Updated product creation to include user association
+   - Implemented proper data validation for user-product relationships
+
+2. **Frontend Components**
+   - Created UserProducts component for displaying user's products
+   - Updated ProductForm to include user association
+   - Modified navigation to show user-specific actions
+   - Added protected routes for user-specific features
+
+3. **User Experience Improvements**
+   - Implemented conditional rendering based on user authentication
+   - Added My Products section in navigation
+   - Enhanced authentication state management
+   - Added logout functionality with proper cleanup
+
+These implementations enable users to manage their own products while maintaining a clear separation between personal and general product listings.

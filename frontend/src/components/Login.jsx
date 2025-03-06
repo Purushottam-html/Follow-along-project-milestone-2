@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setUserEmail }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -36,6 +36,8 @@ const Login = () => {
 
       if (response.ok) {
         localStorage.setItem('userData', JSON.stringify(data));
+        localStorage.setItem('userEmail', formData.email);
+        setUserEmail(formData.email);
         console.log('Login successful, navigating to home');
         navigate('/');
       } else {

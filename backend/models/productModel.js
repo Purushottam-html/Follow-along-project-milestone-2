@@ -6,6 +6,11 @@ const productSchema = new mongoose.Schema({
         required: [true, 'Product name is required'],
         trim: true
     },
+    userEmail: {
+        type: String,
+        required: [true, 'User email is required'],
+        trim: true
+    },
     description: {
         type: String,
         required: [true, 'Product description is required']

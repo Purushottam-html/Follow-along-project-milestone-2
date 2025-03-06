@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ userEmail }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -31,6 +31,16 @@ const Navbar = () => {
               <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
                 About
               </Link>
+              {userEmail && (
+                <>
+                  <Link to="/my-products" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
+                    My Products
+                  </Link>
+                  <Link to="/add-product" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
+                    Add Product
+                  </Link>
+                </>
+              )}
             </div>
           </div>
           
@@ -65,11 +75,26 @@ const Navbar = () => {
               </span>
             </Link>
             
-            <Link to="/login" className="p-2 rounded-md text-gray-100 hover:text-pink-200 focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </Link>
+            {userEmail ? (
+              <button
+                onClick={() => {
+                  localStorage.removeItem('userEmail');
+                  localStorage.removeItem('userData');
+                  window.location.href = '/login';
+                }}
+                className="p-2 rounded-md text-gray-100 hover:text-pink-200 focus:outline-none"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+              </button>
+            ) : (
+              <Link to="/login" className="p-2 rounded-md text-gray-100 hover:text-pink-200 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </Link>
+            )}
             
             {/* Mobile menu button */}
             <button 
@@ -100,6 +125,16 @@ const Navbar = () => {
             <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
               About
             </Link>
+            {userEmail && (
+              <>
+                <Link to="/my-products" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
+                  My Products
+                </Link>
+                <Link to="/add-product" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
+                  Add Product
+                </Link>
+              </>
+            )}
             <div className="pt-2">
               <input
                 type="text"

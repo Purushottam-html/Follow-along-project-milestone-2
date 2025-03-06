@@ -1,13 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const ProductForm = () => {
+const ProductForm = ({ userEmail }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: '',
     category: '',
-    images: []
   });
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,17 +21,49 @@ const ProductForm = () => {
   };
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setFormData(prev => ({
-      ...prev,
-      images: files
-    }));
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Form submission logic will be added later
-    console.log(formData);
+    setLoading(true);
+
+    try {
+      // Create FormData object
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('price', formData.price);
+      formDataToSend.append('category', formData.category);
+      formDataToSend.append('userEmail', userEmail);
+      
+      // Append image if selected
+      if (image) {
+        formDataToSend.append('image', image);
+      }
+
+      const response = await fetch('http://localhost:5000/api/products', {
+        method: 'POST',
+        body: formDataToSend, // Don't set Content-Type header, browser will set it with boundary for FormData
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create product');
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        alert('Product created successfully!');
+        navigate('/'); // Redirect to home page
+      }
+    } catch (error) {
+      console.error('Error creating product:', error);
+      alert('Failed to create product. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -101,28 +136,27 @@ const ProductForm = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Product Images
+              Product Image
             </label>
             <input
               type="file"
-              name="images"
+              name="image"
               onChange={handleImageChange}
-              multiple
               accept="image/*"
               className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
               required
             />
-            <p className="mt-1 text-sm text-gray-500">
-              You can select multiple images
-            </p>
           </div>
 
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              disabled={loading}
+              className={`${
+                loading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'
+              } text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
             >
-              Add Product
+              {loading ? 'Adding Product...' : 'Add Product'}
             </button>
           </div>
         </form>
