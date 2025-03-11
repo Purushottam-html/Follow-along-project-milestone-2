@@ -355,3 +355,70 @@ In this milestone, we implemented a **Navbar component** to improve navigation a
 - **Smooth transitions** between pages enhance usability.  
 
 This milestone improves the overall accessibility and structure of the application, making navigation seamless and user-friendly.
+
+
+### Milestone 16 Summary  
+In this milestone, we implemented a **Product Info Page** to display detailed product information and allow users to add items to their cart.  
+
+#### 1. Frontend Enhancements  
+- Created a **Product Info Page** to show:  
+  - **Product Image**  
+  - **Name and Description**  
+  - **Price**  
+  - **Quantity Selector**  
+  - **Add to Cart Button**  
+- Ensured the page is **responsive** and accessible on all devices.  
+
+#### 2. User Experience Improvements  
+- Users can now view **detailed product information** before purchasing.  
+- Added a **quantity selector** to allow users to choose the desired amount.  
+- The **Add to Cart button** simplifies the shopping experience.  
+
+This milestone enhances the product browsing experience, making it easier for users to view product details and add items to their cart. 🛒  
+
+
+### Milestone 17 Summary  
+In this milestone, we implemented the **Add to Cart functionality**, allowing users to store selected products in their cart.  
+
+#### 1. Backend Enhancements  
+- Updated the **User Schema** to include a **cart** field.  
+- Created an **API endpoint** to:  
+  - Receive product details from the frontend.  
+  - Store the product in the user's cart in the database.  
+- Ensured proper **data validation and security** for cart operations.  
+
+#### 2. Frontend Enhancements  
+- Integrated the **Add to Cart button** on the Product Info Page.  
+- Sent product details to the backend when users add items to the cart.  
+- Provided **real-time feedback** using toast notifications.  
+
+#### 3. User Experience Improvements  
+- Users can now **add products to their cart** and access them later.  
+- The **cart persists in the database**, ensuring that items remain available even after page reloads.  
+- **Visual feedback** helps users confirm successful additions to the cart.  
+
+This milestone lays the foundation for a **fully functional shopping cart**, improving the e-commerce experience within the application. 🛍️  
+
+
+### Milestone 18 Summary  
+In this milestone, we implemented the **Cart Page Backend Integration**, enabling users to view their cart contents dynamically.  
+
+#### 1. Backend Enhancements  
+- Created an **API endpoint** to:  
+  - Retrieve all cart items associated with a user’s email.  
+  - Send cart data to the frontend for display.  
+- Ensured **secure access** so only authenticated users can fetch their cart data.  
+
+#### 2. Frontend Enhancements  
+- Integrated the **Cart Page** to fetch and display cart items from the backend.  
+- Displayed product details, including:  
+  - **Images, names, prices, and selected quantities.**  
+- Implemented **real-time updates**, ensuring changes reflect instantly.  
+
+#### 3. User Experience Improvements  
+- Users can now **view all items in their cart** with accurate details.  
+- Ensured **seamless data retrieval**, making the cart experience smooth.  
+- Improved usability by providing **a structured and clear cart display**.  
+
+With this milestone, the cart system is now fully functional, allowing users to manage their shopping experience efficiently. 🛒✨  
+

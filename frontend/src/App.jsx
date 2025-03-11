@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import HomePage from './components/HomePage';
@@ -7,6 +8,8 @@ import ProductForm from './components/ProductForm';
 import EditProduct from './components/EditProduct';
 import UserProducts from './components/UserProducts';
 import NavbarComponent from './components/NavbarComponent';
+import Cart from './components/Cart';
+import ProductDetails from './components/ProductDetails';
 
 function App() {
   const [userEmail, setUserEmail] = useState(null);
@@ -23,6 +26,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="w-full min-h-screen bg-gray-50">
+        <Toaster position="top-center" />
         <NavbarComponent userEmail={userEmail} userName={userName} />
         <Routes>
           <Route 
@@ -60,6 +64,18 @@ function App() {
             element={
               userEmail ?
                 <UserProducts userEmail={userEmail} /> :
+                <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/products/:id"
+            element={<ProductDetails />}
+          />
+          <Route
+            path="/cart"
+            element={
+              userEmail ?
+                <Cart /> :
                 <Navigate to="/login" replace />
             }
           />

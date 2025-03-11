@@ -1,4 +1,5 @@
 import User from '../models/userModel.js';
+import Product from '../models/productModel.js';
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -100,4 +101,142 @@ const registerUser = async (req, res) => {
   }
 };
 
-export { loginUser, registerUser };
+// @desc    Add product to cart
+// @route   POST /api/users/cart
+// @access  Public
+const addToCart = async (req, res) => {
+  try {
+    const { email, productId, quantity } = req.body;
+
+    // Find user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Find product
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      });
+    }
+
+    // Check if product already in cart
+    const cartItemIndex = user.cart.findIndex(item =>
+      item.product.toString() === productId
+    );
+
+    if (cartItemIndex > -1) {
+      // Update existing item
+      user.cart[cartItemIndex].quantity = quantity;
+      user.cart[cartItemIndex].price = product.price;
+    } else {
+      // Add new item
+      user.cart.push({
+        product: productId,
+        quantity,
+        price: product.price
+      });
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      data: user.cart,
+      message: 'Product added to cart'
+    });
+  } catch (error) {
+    console.error('Add to cart error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Error adding product to cart'
+    });
+  }
+};
+
+// @desc    Get cart items
+// @route   GET /api/users/cart/:email
+// @access  Public
+const getCart = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const user = await User.findOne({ email }).populate('cart.product');
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: user.cart,
+      message: 'Cart items retrieved successfully'
+    });
+  } catch (error) {
+    console.error('Get cart error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Error retrieving cart items'
+    });
+  }
+};
+
+// @desc    Update cart item quantity
+// @route   PUT /api/users/cart
+// @access  Public
+const updateCartItemQuantity = async (req, res) => {
+  try {
+    const { email, productId, quantity } = req.body;
+
+    if (quantity < 1) {
+      return res.status(400).json({
+        success: false,
+        message: 'Quantity must be at least 1'
+      });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    const cartItemIndex = user.cart.findIndex(item =>
+      item.product.toString() === productId
+    );
+
+    if (cartItemIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found in cart'
+      });
+    }
+
+    user.cart[cartItemIndex].quantity = quantity;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      data: user.cart,
+      message: 'Cart item quantity updated'
+    });
+  } catch (error) {
+    console.error('Update cart quantity error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Error updating cart item quantity'
+    });
+  }
+};
+
+export { loginUser, registerUser, addToCart, getCart, updateCartItemQuantity };

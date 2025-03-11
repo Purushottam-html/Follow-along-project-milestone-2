@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+// import { toast } from 'react-hot-toast';
 
 const DEFAULT_IMAGE = 'https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
 
@@ -9,6 +11,8 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [imgError, setImgError] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+    const [addingToCart, setAddingToCart] = useState(false);
 
     // Function to correct port in URL if needed
     const getImageUrl = (url) => {
@@ -112,8 +116,71 @@ const ProductDetails = () => {
                                 </span>
                             </div>
 
-                            <button className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300">
-                                Add to Cart
+                            {/* Quantity Selector */}
+                            <div className="mb-6">
+                                <h2 className="text-gray-500 text-sm uppercase tracking-wide mb-2">
+                                    Quantity
+                                </h2>
+                                <div className="flex items-center border rounded-lg w-32">
+                                    <button
+                                        onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                                        className="px-3 py-1 border-r hover:bg-gray-100"
+                                    >
+                                        -
+                                    </button>
+                                    <span className="px-4 py-1">{quantity}</span>
+                                    <button
+                                        onClick={() => setQuantity(prev => prev + 1)}
+                                        className="px-3 py-1 border-l hover:bg-gray-100"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button
+                                className={`w-full ${
+                                    addingToCart
+                                    ? 'bg-purple-400 cursor-not-allowed'
+                                    : 'bg-purple-600 hover:bg-purple-700'
+                                } text-white py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center`}
+                                onClick={async () => {
+                                    try {
+                                        setAddingToCart(true);
+                                        const userEmail = localStorage.getItem('userEmail');
+                                        if (!userEmail) {
+                                            toast.error('Please login first');
+                                            return;
+                                        }
+
+                                        const response = await fetch('http://localhost:5001/api/users/cart', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                email: userEmail,
+                                                productId: product._id,
+                                                quantity: quantity
+                                            }),
+                                        });
+
+                                        const data = await response.json();
+                                        if (data.success) {
+                                            toast.success('Added to cart');
+                                        } else {
+                                            toast.error(data.message || 'Failed to add to cart');
+                                        }
+                                    } catch (err) {
+                                        console.error('Add to cart error:', err);
+                                        toast.error('Failed to add to cart');
+                                    } finally {
+                                        setAddingToCart(false);
+                                    }
+                                }}
+                                disabled={addingToCart}
+                            >
+                                {addingToCart ? 'Adding...' : 'Add to Cart'}
                             </button>
                         </div>
                     </div>
