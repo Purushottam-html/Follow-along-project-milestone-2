@@ -7,7 +7,8 @@ const SignUp = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    profileImage: null
   });
   const [errors, setErrors] = useState({});
 
@@ -44,7 +45,9 @@ const SignUp = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, type } = e.target;
+    const value = type === 'file' ? e.target.files[0] : e.target.value;
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -62,16 +65,18 @@ const SignUp = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
+        const formDataToSend = new FormData();
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('password', formData.password);
+        if (formData.profileImage) {
+          formDataToSend.append('profileImage', formData.profileImage);
+        }
+
         const response = await fetch('http://localhost:5001/api/users/register', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            password: formData.password
-          }),
+          // Don't set Content-Type header, let browser set it with boundary for FormData
+          body: formDataToSend,
         });
         const data = await response.json();
         if (response.ok) {
@@ -95,6 +100,28 @@ const SignUp = () => {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
+          {/* Profile Image field */}
+          <div>
+            <label htmlFor="profileImage" className="block text-sm font-medium leading-6 text-gray-900">
+              Profile Image
+            </label>
+            <div className="mt-2">
+              <input
+                id="profileImage"
+                name="profileImage"
+                type="file"
+                accept="image/*"
+                onChange={handleChange}
+                className="block w-full text-sm text-gray-500
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-md file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-indigo-600 file:text-white
+                  hover:file:bg-indigo-500"
+              />
+            </div>
+          </div>
+
           {/* Name field */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">

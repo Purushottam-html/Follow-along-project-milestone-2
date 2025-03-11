@@ -239,4 +239,71 @@ const updateCartItemQuantity = async (req, res) => {
   }
 };
 
-export { loginUser, registerUser, addToCart, getCart, updateCartItemQuantity };
+// @desc    Get user profile
+// @route   GET /api/users/profile/:email
+// @access  Public
+const getUserProfile = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        profileImage: user.profileImage,
+        addresses: user.addresses
+      },
+      message: 'User profile retrieved successfully'
+    });
+  } catch (error) {
+    console.error('Get profile error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Error retrieving user profile'
+    });
+  }
+};
+
+// @desc    Add address to user profile
+// @route   POST /api/users/address
+// @access  Public
+const addAddress = async (req, res) => {
+  try {
+    const { email, address } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    user.addresses.push(address);
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      data: user.addresses,
+      message: 'Address added successfully'
+    });
+  } catch (error) {
+    console.error('Add address error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Error adding address'
+    });
+  }
+};
+
+export { loginUser, registerUser, addToCart, getCart, updateCartItemQuantity, getUserProfile, addAddress };

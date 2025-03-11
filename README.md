@@ -422,3 +422,91 @@ In this milestone, we implemented the **Cart Page Backend Integration**, enablin
 
 With this milestone, the cart system is now fully functional, allowing users to manage their shopping experience efficiently. 🛒✨  
 
+
+### Milestone 19 Summary  
+In this milestone, we implemented the **Cart Page UI** and added functionality to update product quantities dynamically.  
+
+#### 1. Frontend Enhancements  
+- Created a **Cart Page** to display all products inside the cart.  
+- Added **+ and - buttons** to allow users to increase or decrease product quantity.  
+- Implemented real-time updates to reflect changes in quantity.  
+
+#### 2. Backend Enhancements  
+- Created a **new backend endpoint** to handle quantity updates for cart items.  
+- Integrated the frontend with the backend to send update requests when quantity changes.  
+- Ensured database consistency by updating the cart collection accordingly.  
+
+#### 3. User Experience Improvements  
+- Users can now **modify product quantities** directly from the cart.  
+- The total price updates dynamically as quantity changes.  
+- Implemented **error handling** for edge cases like exceeding available stock.  
+
+This milestone improves the cart functionality, making it more interactive and user-friendly.
+
+
+### Milestone 20 Summary  
+In this milestone, we implemented the **Profile Page** and created a backend endpoint to fetch user details.  
+
+#### 1. Backend Enhancements  
+- Created a **new endpoint** to retrieve user data based on their email.  
+- Fetched and returned **profile details** such as name, email, profile picture, and addresses.  
+
+#### 2. Frontend Enhancements  
+- Developed a **Profile Page UI** to display user information.  
+- Displayed **profile photo, name, and email** in a structured layout.  
+- Added a section for **addresses**, with an **"Add Address"** button for new entries.  
+- If no address exists, displayed **"No address found"** for better user feedback.  
+
+#### 3. User Experience Improvements  
+- Users can now **view their profile details** in a dedicated section.  
+- Profile information is fetched dynamically from the backend.  
+- The **"Add Address"** button allows seamless navigation to the address form.  
+
+This milestone enhances the user experience by providing a structured **profile management system**.  
+
+
+### Milestone 21 Summary  
+In this milestone, we implemented the **Address Form Page**, allowing users to input and manage their addresses.  
+
+#### 1. Frontend Enhancements  
+- Created a **new Address Form page** for users to input their address details.  
+- Included form fields for:  
+  - **Country**  
+  - **City**  
+  - **Address Line 1 & 2**  
+  - **ZIP Code**  
+  - **Address Type (Home/Work/Other)**  
+- Implemented a **state management system** to store user input.  
+
+#### 2. Navigation & Integration  
+- Clicking the **"Add Address"** button in the **Profile Page** now redirects to the Address Form.  
+- Users can **submit** or **cancel** address entry seamlessly.  
+
+#### 3. User Experience Improvements  
+- Ensured **form validation** for proper address input.  
+- Smooth **navigation back to the profile page** after submission.  
+- **Responsive UI** for usability across different screen sizes.  
+
+This milestone enables users to **easily input and manage addresses**, preparing for future database integration.  
+
+
+
+### Milestone 22 Summary  
+In this milestone, we implemented the **backend functionality** for storing user addresses in the database.  
+
+#### 1. Backend Enhancements  
+- Created a **new POST endpoint (`/api/users/address`)** to receive and store addresses.  
+- Updated the **User Schema** to include an **address array** for storing multiple addresses.  
+- Implemented **error handling** and validation for address submissions.  
+
+#### 2. Frontend Integration  
+- The **Address Form** now sends data to the backend upon submission.  
+- Added functionality to **store addresses inside the user profile**.  
+- Integrated automatic **navigation back to the profile page** after saving an address.  
+
+#### 3. User Experience Improvements  
+- Users can now **add multiple addresses** to their profile.  
+- Address details are **persisted in the database**, ensuring data retention.  
+- **Smooth and seamless process** for managing addresses.  
+
+This milestone completes the **address management system**, enabling users to store their addresses efficiently.  

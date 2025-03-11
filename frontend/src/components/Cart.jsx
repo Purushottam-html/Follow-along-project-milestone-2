@@ -103,11 +103,11 @@ const Cart = () => {
         
         <div className="bg-white rounded-lg shadow overflow-hidden">
           {cartItems.map((item) => (
-            <div 
-              key={item.product._id} 
+            <div
+              key={item.product._id}
               className="border-b last:border-b-0 p-6"
             >
-              <div className="flex items-center">
+              <div key={`content-${item.product._id}`} className="flex items-center">
                 <img
                   src={item.product.imageUrl}
                   alt={item.product.name}

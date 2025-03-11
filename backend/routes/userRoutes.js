@@ -4,7 +4,9 @@ import {
   registerUser,
   addToCart,
   getCart,
-  updateCartItemQuantity
+  updateCartItemQuantity,
+  getUserProfile,
+  addAddress
 } from '../controllers/userController.js';
 import { uploadMiddleware } from '../middleware/uploadMiddleware.js';
 
@@ -17,5 +19,11 @@ router.post('/register', uploadMiddleware('profileImage'), registerUser);
 router.post('/cart', addToCart);
 router.get('/cart/:email', getCart);
 router.put('/cart', updateCartItemQuantity);
+
+// Profile route
+router.get('/profile/:email', getUserProfile);
+
+// Address route
+router.post('/address', addAddress);
 
 export default router;

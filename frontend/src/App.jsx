@@ -10,6 +10,8 @@ import UserProducts from './components/UserProducts';
 import NavbarComponent from './components/NavbarComponent';
 import Cart from './components/Cart';
 import ProductDetails from './components/ProductDetails';
+import Profile from './components/Profile';
+import AddressForm from './components/AddressForm';
 
 function App() {
   const [userEmail, setUserEmail] = useState(null);
@@ -76,6 +78,22 @@ function App() {
             element={
               userEmail ?
                 <Cart /> :
+                <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              userEmail ?
+                <Profile /> :
+                <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/add-address"
+            element={
+              userEmail ?
+                <AddressForm /> :
                 <Navigate to="/login" replace />
             }
           />

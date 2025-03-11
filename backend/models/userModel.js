@@ -40,6 +40,33 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: null
   },
+  addresses: [{
+    country: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    address1: {
+      type: String,
+      required: true
+    },
+    address2: {
+      type: String,
+      required: false
+    },
+    zipCode: {
+      type: String,
+      required: true
+    },
+    addressType: {
+      type: String,
+      required: true,
+      enum: ['home', 'work', 'other']
+    }
+  }],
   cart: [cartItemSchema],
 }, {
   timestamps: true,
