@@ -1,6 +1,7 @@
 # Dependencies
-**/node_modules
-**/package-lock.json
+node_modules/
+/.pnp
+.pnp.js
 
 # Environment variables
 .env
@@ -10,24 +11,24 @@
 .env.production.local
 
 # Build outputs
-/dist
 /build
-**/dist
-**/build
+/dist
+*.log
 
-# IDE
-.vscode
-.idea
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
 
-# Logs
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# System files
-.DS_Store
-Thumbs.db
+# Local uploads
+/backend/uploads/
 
-# Uploaded files
-**/uploads
-uploads/
+# Testing
+/coverage

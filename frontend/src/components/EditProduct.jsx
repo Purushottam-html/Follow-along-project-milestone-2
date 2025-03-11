@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const ProductForm = ({ userEmail }) => {
+const EditProduct = ({ userEmail }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -13,6 +14,32 @@ const ProductForm = ({ userEmail }) => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [currentImageUrl, setCurrentImageUrl] = useState('');
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:5001/api/products/${id}`);
+        const data = await response.json();
+
+        if (data.success) {
+          const { name, description, price, category, imageUrl } = data.data;
+          setFormData({ name, description, price, category });
+          setCurrentImageUrl(imageUrl);
+          setPreview(imageUrl);
+        } else {
+          setError('Failed to fetch product details');
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        setError('Error loading product details');
+      }
+    };
+
+    if (id) {
+      fetchProduct();
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,7 +68,6 @@ const ProductForm = ({ userEmail }) => {
     setLoading(true);
 
     try {
-      // Create FormData object for file upload
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
       formDataToSend.append('description', formData.description);
@@ -53,36 +79,38 @@ const ProductForm = ({ userEmail }) => {
         formDataToSend.append('image', image);
       }
 
-      console.log('Sending product data to server...');
-      const response = await fetch('http://localhost:5001/api/products', {
-        method: 'POST',
-        body: formDataToSend, // Don't set Content-Type header for FormData
+      const response = await fetch(`http://localhost:5001/api/products/${id}`, {
+        method: 'PUT',
+        body: formDataToSend,
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create product');
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to update product');
       }
 
       const data = await response.json();
-      console.log('Server response:', data);
       
       if (data.success) {
-        alert('Product created successfully!');
-        navigate('/homepage');
+        alert('Product updated successfully!');
+        navigate('/my-products');
       }
     } catch (error) {
-      console.error('Error creating product:', error);
-      setError(error.message || 'Failed to create product. Please try again.');
+      console.error('Error updating product:', error);
+      setError(error.message || 'Failed to update product. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
+  const handleCancel = () => {
+    navigate('/my-products');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h2 className="text-2xl font-bold mb-6">Add New Product</h2>
+        <h2 className="text-2xl font-bold mb-6">Edit Product</h2>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -163,7 +191,7 @@ const ProductForm = ({ userEmail }) => {
               htmlFor="image-upload"
               className="cursor-pointer inline-block bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              Select Image
+              Change Image
             </label>
             {error && (
               <p className="mt-1 text-sm text-red-600">{error}</p>
@@ -179,7 +207,14 @@ const ProductForm = ({ userEmail }) => {
             )}
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               disabled={loading}
@@ -187,7 +222,7 @@ const ProductForm = ({ userEmail }) => {
                 loading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'
               } text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
             >
-              {loading ? 'Adding Product...' : 'Add Product'}
+              {loading ? 'Updating...' : 'Update Product'}
             </button>
           </div>
         </form>
@@ -196,4 +231,4 @@ const ProductForm = ({ userEmail }) => {
   );
 };
 
-export default ProductForm;
+export default EditProduct;

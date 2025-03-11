@@ -1,9 +1,32 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ userEmail }) => {
+const Navbar = ({ userEmail, userName }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userData');
+    window.location.href = '/login';
+  };
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isUserMenuOpen && !event.target.closest('.user-menu')) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isUserMenuOpen]);
+
+  const handleMenuItemClick = () => {
+    setIsUserMenuOpen(false);
+  };
 
   return (
     <nav className="bg-purple-900 text-white shadow-lg sticky top-0 z-50">
@@ -11,7 +34,7 @@ const Navbar = ({ userEmail }) => {
         <div className="flex justify-between h-16">
           {/* Logo and Brand */}
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center">
+            <Link to="/homepage" className="flex-shrink-0 flex items-center">
               <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-400">
                 AniMerch
               </span>
@@ -19,28 +42,18 @@ const Navbar = ({ userEmail }) => {
             
             {/* Desktop Navigation */}
             <div className="hidden md:ml-6 md:flex md:space-x-8">
-              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
+              <Link to="/homepage" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
                 Home
               </Link>
-              <Link to="/products" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
+              <Link to="/homepage" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
                 Products
               </Link>
-              <Link to="/collections" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
+              <Link to="/homepage" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
                 Collections
               </Link>
-              <Link to="/about" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
+              <Link to="/homepage" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
                 About
               </Link>
-              {userEmail && (
-                <>
-                  <Link to="/my-products" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
-                    My Products
-                  </Link>
-                  <Link to="/add-product" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-800 hover:text-pink-200 transition">
-                    Add Product
-                  </Link>
-                </>
-              )}
             </div>
           </div>
           
@@ -76,18 +89,47 @@ const Navbar = ({ userEmail }) => {
             </Link>
             
             {userEmail ? (
-              <button
-                onClick={() => {
-                  localStorage.removeItem('userEmail');
-                  localStorage.removeItem('userData');
-                  window.location.href = '/login';
-                }}
-                className="p-2 rounded-md text-gray-100 hover:text-pink-200 focus:outline-none"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </button>
+              <div className="relative user-menu">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="p-2 rounded-md text-gray-100 hover:text-pink-200 focus:outline-none flex items-center"
+                >
+                  <span className="mr-2">{userName || 'User'}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isUserMenuOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"} />
+                  </svg>
+                </button>
+
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="py-1" role="menu">
+                      <Link
+                        to="/add-product"
+                        onClick={handleMenuItemClick}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-100"
+                        role="menuitem"
+                      >
+                        Add Product
+                      </Link>
+                      <Link
+                        to="/my-products"
+                        onClick={handleMenuItemClick}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-100"
+                        role="menuitem"
+                      >
+                        Your Products
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-100"
+                        role="menuitem"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link to="/login" className="p-2 rounded-md text-gray-100 hover:text-pink-200 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -113,28 +155,18 @@ const Navbar = ({ userEmail }) => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
+            <Link to="/homepage" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
               Home
             </Link>
-            <Link to="/products" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
+            <Link to="/homepage" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
               Products
             </Link>
-            <Link to="/collections" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
+            <Link to="/homepage" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
               Collections
             </Link>
-            <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
+            <Link to="/homepage" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
               About
             </Link>
-            {userEmail && (
-              <>
-                <Link to="/my-products" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
-                  My Products
-                </Link>
-                <Link to="/add-product" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-purple-800 hover:text-pink-200">
-                  Add Product
-                </Link>
-              </>
-            )}
             <div className="pt-2">
               <input
                 type="text"

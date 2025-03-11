@@ -288,3 +288,70 @@ In this milestone, we implemented user-specific product filtering and display:
    - Added logout functionality with proper cleanup
 
 These implementations enable users to manage their own products while maintaining a clear separation between personal and general product listings.
+
+
+### Milestone 13 Summary  
+In this milestone, we implemented the ability to edit and delete products, providing users with greater control over their listings.
+
+#### 1. Backend Enhancements  
+- Added an **update endpoint** to modify existing product details in MongoDB.  
+- Implemented a **delete endpoint** to allow users to remove products.  
+- Integrated **Cloudinary** for optional image updates.  
+- Updated **product routes** to support edit and delete operations.  
+
+#### 2. Frontend Enhancements  
+- Created an **EditProduct** component with a **pre-filled form** for easy modifications.  
+- Added an **edit button** to the **ProductCard** component, allowing users to modify their products.  
+- Implemented a **delete button** with a **confirmation dialog** for safe product removal.  
+- Updated the **UserProducts** component to manage edit and delete functionality.  
+- Configured routing in **App.jsx** to include an **edit product page**.  
+
+#### 3. User Experience Improvements  
+- When editing a product, the form is **pre-filled** with existing details.  
+- Users can modify **product name, description, price, and images**.  
+- Image updates are **optional**; the previous image is retained if unchanged.  
+- **Deleting a product requires confirmation**, ensuring accidental deletions are avoided.  
+
+With these enhancements, users can now efficiently manage their product listings, improving overall usability and flexibility.
+
+
+
+### Milestone 14 Summary  
+In this milestone, we implemented the ability to delete products, allowing users to remove their listings efficiently.
+
+#### 1. Backend Enhancements  
+- Added a **delete endpoint** to remove products from MongoDB using their unique ID.  
+- Implemented **proper error handling** for invalid or non-existent product IDs.  
+- Updated **product routes** to include the delete operation.  
+
+#### 2. Frontend Enhancements  
+- Added a **delete button** to the **ProductCard** component.  
+- Implemented a **confirmation dialog** before deletion to prevent accidental removals.  
+- Updated the **UserProducts** component to handle delete requests dynamically.  
+
+#### 3. User Experience Improvements  
+- Users can now delete their products with a single click.  
+- The product list updates **instantly** after deletion for a seamless experience.  
+- Implemented **error handling** to notify users if the deletion fails.  
+
+These updates provide users with greater control over their product listings, ensuring a smooth and secure deletion process.
+
+
+
+### Milestone 15 Summary  
+In this milestone, we implemented a **Navbar component** to improve navigation across the application.
+
+#### 1. Frontend Enhancements  
+- Created a **NavBar component** with links to key pages:  
+  - **My Products**  
+  - **Add Product**  
+  - **Cart**  
+- Integrated the **Navbar** into all pages for a consistent experience.  
+- Implemented **responsive design** to ensure usability across all screen sizes.  
+
+#### 2. User Experience Improvements  
+- Users can now **easily navigate** between different sections.  
+- The **Navbar remains visible** on all pages for quick access.  
+- **Smooth transitions** between pages enhance usability.  
+
+This milestone improves the overall accessibility and structure of the application, making navigation seamless and user-friendly.

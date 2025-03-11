@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ setUserEmail }) => {
+const Login = ({ setUserEmail, setUserName }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,9 +21,12 @@ const Login = ({ setUserEmail }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
       console.log('Attempting login with:', { email: formData.email });
-      const response = await fetch('http://localhost:5000/api/users/login', {
+      const response = await fetch('http://localhost:5001/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,19 +38,22 @@ const Login = ({ setUserEmail }) => {
       console.log('Response status:', response.status);
       console.log('Response data:', data);
 
-      if (response.ok) {
-        localStorage.setItem('userData', JSON.stringify(data));
+      if (response.ok && data.success) {
+        localStorage.setItem('userData', JSON.stringify(data.data));
         localStorage.setItem('userEmail', formData.email);
         setUserEmail(formData.email);
+        setUserName(data.data.name);
         console.log('Login successful, navigating to home');
-        navigate('/');
+        navigate('/homepage');
       } else {
         console.log('Login failed:', data.message);
-        setError(data.message || 'Invalid credentials');
+        setError(data.message || 'Login failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('Login error:', error);
-      setError('Server connection error. Please try again.');
+      setError('Server not responding. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,6 +80,7 @@ const Login = ({ setUserEmail }) => {
                 required
                 value={formData.email}
                 onChange={handleChange}
+                disabled={loading}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -93,22 +101,29 @@ const Login = ({ setUserEmail }) => {
                 required
                 value={formData.password}
                 onChange={handleChange}
+                disabled={loading}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
 
           {error && (
-            <div className="text-center text-sm text-red-600">
+            <div className="text-center text-sm text-red-600 bg-red-50 p-2 rounded">
               {error}
             </div>
           )}
+          
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              disabled={loading}
+              className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+                loading 
+                  ? 'bg-indigo-400 cursor-not-allowed'
+                  : 'bg-indigo-600 hover:bg-indigo-500'
+              }`}
             >
-              Sign in
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
         </form>
@@ -117,6 +132,7 @@ const Login = ({ setUserEmail }) => {
           Don't have an account?{' '}
           <button
             onClick={() => navigate('/signup')}
+            disabled={loading}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Sign up here
