@@ -127,6 +127,14 @@ const Navbar = ({ userEmail, userName }) => {
                       >
                         Your Products
                       </Link>
+                      <Link
+                        to="/my-orders"
+                        onClick={handleMenuItemClick}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-100"
+                        role="menuitem"
+                      >
+                        My Orders
+                      </Link>
                       <button
                         onClick={handleLogout}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-purple-100"

@@ -620,3 +620,39 @@ In this milestone, we implemented a **backend endpoint to retrieve all user orde
 
 This milestone enables users to **view their order history**, improving the shopping experience and allowing better order management.  
 
+
+
+### Milestone 27 Summary  
+In this milestone, we implemented a **frontend page for My Orders**, allowing users to view their order history.  
+
+#### 1. Frontend Enhancements  
+- Created a **My Orders page** to display all past orders.  
+- Integrated with the **backend order retrieval endpoint** to fetch user orders.  
+- Sent a **GET request with the user’s email** to retrieve their order details.  
+- Displayed **all user orders**, including product details, order status, and delivery address.  
+
+#### 2. Navigation Improvements  
+- Added a **"My Orders" link** in the Navbar for easy access.  
+- Ensured the page is accessible only to **authenticated users**.  
+
+This milestone enhances the user experience by providing a **dedicated section to track order history**, improving order management and transparency.  
+
+
+### Milestone 28 Summary  
+In this milestone, we implemented the **order cancellation feature**, allowing users to cancel their placed orders.  
+
+#### 1. Frontend Enhancements  
+- Added a **"Cancel Order" button** for each order in the **My Orders** page.  
+- Ensured that the **cancel button is only visible for pending orders**.  
+- Updated the order status dynamically after cancellation.  
+
+#### 2. Backend Enhancements  
+- Created a **backend endpoint** to handle order cancellations.  
+- Received the **order ID** from the frontend and updated the status to **"Canceled"** in the database.  
+- Ensured proper validation to prevent cancellation of already processed orders.  
+
+#### 3. User Experience Improvements  
+- Users can now **cancel pending orders** with a single click.  
+- Improved order tracking with **status updates** for each order.  
+
+This milestone enhances order management by giving users the flexibility to **cancel orders when necessary**, ensuring a smooth and user-friendly experience.  

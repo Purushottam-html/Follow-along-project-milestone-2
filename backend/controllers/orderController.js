@@ -82,4 +82,43 @@ const getUserOrders = async (req, res) => {
   }
 };
 
-export { createOrder, getUserOrders };
+// @desc    Cancel an order
+// @route   PUT /api/orders/:id/cancel
+// @access  Public
+const cancelOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    if (order.status !== 'pending') {
+      return res.status(400).json({
+        success: false,
+        message: 'Only pending orders can be cancelled'
+      });
+    }
+
+    order.status = 'cancelled';
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      data: order,
+      message: 'Order cancelled successfully'
+    });
+  } catch (error) {
+    console.error('Cancel order error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Error cancelling order'
+    });
+  }
+};
+
+export { createOrder, getUserOrders, cancelOrder };

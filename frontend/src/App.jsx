@@ -13,6 +13,7 @@ import ProductDetails from './components/ProductDetails';
 import Profile from './components/Profile';
 import AddressForm from './components/AddressForm';
 import Checkout from './components/Checkout';
+import MyOrders from './components/MyOrders';
 
 function App() {
   const [userEmail, setUserEmail] = useState(null);
@@ -103,6 +104,14 @@ function App() {
             element={
               userEmail ?
                 <Checkout /> :
+                <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/my-orders"
+            element={
+              userEmail ?
+                <MyOrders /> :
                 <Navigate to="/login" replace />
             }
           />
