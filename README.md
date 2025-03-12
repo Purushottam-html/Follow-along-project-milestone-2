@@ -545,3 +545,78 @@ In this milestone, we implemented the **backend functionality** for storing user
 - **Smooth and seamless process** for managing addresses.  
 
 This milestone completes the **address management system**, enabling users to store their addresses efficiently.  
+
+### Milestone 23 Summary  
+In this milestone, we began implementing the **order placement functionality** by adding address selection and preparing the database schema for orders.  
+
+#### 1. Frontend Enhancements  
+- Added a **"Place Order" button** inside the cart page.  
+- Created a **Select Address page**, displaying all saved addresses.  
+- Implemented an option to **choose a delivery address** before placing an order.  
+
+#### 2. Backend Enhancements  
+- Created a **new backend endpoint** to fetch and return all user addresses.  
+- Updated **navigation flow**, allowing users to proceed from the cart to address selection.  
+- Designed the **Order Schema** to store order details in MongoDB.  
+
+#### 3. User Experience Improvements  
+- Users can now **select an address** for order delivery.  
+- Orders will be structured properly with a **dedicated order schema**.  
+- Improved checkout process by ensuring address selection before order confirmation.  
+
+This milestone lays the foundation for the **order placement system**, ensuring a smooth and structured checkout experience.  
+
+
+### Milestone 24 Summary  
+In this milestone, we implemented the **Order Confirmation Page**, allowing users to review their order details before placing it.  
+
+#### 1. Frontend Enhancements  
+- Created an **Order Confirmation page** displaying:  
+  - **List of products** being ordered.  
+  - **Selected delivery address** for the order.  
+  - **Total price calculation** for the cart.  
+- Added a **"Place Order" button** to confirm the purchase.  
+
+#### 2. User Experience Improvements  
+- Users can now **review their order** before finalizing it.  
+- Ensures **accuracy in order details** (products, address, and pricing).  
+- Provides a **clear and structured checkout flow**.  
+
+This milestone improves the **user's checkout experience**, ensuring clarity and confidence before placing an order.  
+
+
+### Milestone 25 Summary  
+In this milestone, we implemented the **Place Order backend functionality**, allowing users to finalize their orders and store them in the database.  
+
+#### 1. Backend Enhancements  
+- Created a **new API endpoint** to handle order placement:  
+  - Receives **products, user details, and selected address**.  
+  - Retrieves the **user’s ID** using their email.  
+  - Stores **each product as a separate order** with the same address.  
+  - Saves order details in the **MongoDB order collection** using the **Order schema**.  
+
+#### 2. Order Processing Logic  
+- Ensures that **each order entry is linked to a specific user**.  
+- Stores **multiple products as separate orders** for better tracking.  
+- Validates and processes the request to prevent errors.  
+
+This milestone enables the **order placement feature**, ensuring that user purchases are properly stored and managed.  
+
+
+### Milestone 26 Summary  
+In this milestone, we implemented a **backend endpoint to retrieve all user orders**, enabling users to view their past purchases.  
+
+#### 1. Backend Enhancements  
+- Created a **new API endpoint** to fetch user orders:  
+  - Accepts the **user’s email** as a parameter.  
+  - Retrieves the **user’s ID** from the database.  
+  - Fetches all orders associated with that user from the **orders collection**.  
+  - Returns the list of orders in the response.  
+
+#### 2. Order Retrieval Logic  
+- Ensures that **orders are linked to the correct user**.  
+- Fetches **all orders placed by the user** in one request.  
+- Provides structured order data, including **products, address, and order status**.  
+
+This milestone enables users to **view their order history**, improving the shopping experience and allowing better order management.  
+
