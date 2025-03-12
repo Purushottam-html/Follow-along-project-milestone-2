@@ -4,43 +4,78 @@
 ```
 ├── backend/
 │   ├── config/
-│   │   └── db.js           # MongoDB connection setup
+│   │   ├── db.js           # MongoDB connection setup
+│   │   └── cloudinary.js   # Cloudinary configuration
 │   ├── controllers/
-│   │   └── userController.js # User authentication logic
+│   │   ├── userController.js  # User & cart management logic
+│   │   └── productController.js # Product management logic
 │   ├── middleware/
-│   │   └── errorMiddleware.js # Error handling middleware
+│   │   ├── errorMiddleware.js  # Error handling middleware
+│   │   └── uploadMiddleware.js # File upload handling
 │   ├── models/
-│   │   └── userModel.js    # User database model
+│   │   ├── userModel.js    # User & cart schema
+│   │   └── productModel.js # Product schema
 │   ├── routes/
-│   │   └── userRoutes.js   # User API routes
-│   ├── server.js           # Express server with CORS and routes
+│   │   ├── userRoutes.js   # User & cart API routes
+│   │   └── productRoutes.js # Product API routes
+│   ├── server.js           # Express server setup
 │   └── package.json        # Backend dependencies
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Login.jsx         # Login form component
 │   │   │   ├── SignUp.jsx        # Registration form component
-│   │   │   ├── HomePage.jsx      # Homepage with product display
-│   │   │   ├── ProductCard.jsx   # Reusable product card component
-│   │   │   └── ProductForm.jsx   # Product creation form component
-│   │   ├── App.jsx         # Main application component
-│   │   └── main.jsx        # Application entry point
+│   │   │   ├── HomePage.jsx      # Homepage with products
+│   │   │   ├── ProductCard.jsx   # Product display component
+│   │   │   ├── ProductForm.jsx   # Product creation form
+│   │   │   ├── EditProduct.jsx   # Product editing form
+│   │   │   ├── ProductDetails.jsx # Product info page
+│   │   │   ├── UserProducts.jsx  # User's products page
+│   │   │   ├── Cart.jsx         # Shopping cart page
+│   │   │   ├── Profile.jsx      # User profile page
+│   │   │   ├── AddressForm.jsx  # Address input form
+│   │   │   └── NavbarComponent.jsx # Navigation bar
+│   │   ├── App.jsx         # Main component & routing
+│   │   └── main.jsx        # Application entry
 │   ├── vite.config.js      # Vite configuration
 │   └── package.json        # Frontend dependencies
 └── .gitignore             # Git ignore configuration
 ```
 
 ## Features Implemented
-- [x] Express backend server setup with CORS enabled
-- [x] Basic API endpoint structure (/api/test, /api/login)
-- [x] React frontend with Vite and Tailwind CSS
-- [x] Login component with form handling
-- [x] Frontend-backend integration
-- [x] Git configuration for development
-- [x] MongoDB database connection
-- [x] User model and authentication routes
-- [x] Error handling middleware
-- [x] Password encryption with bcrypt
+- [x] User Authentication & Profile
+  - [x] Secure login and registration system
+  - [x] Password encryption with bcrypt
+  - [x] Profile image upload using Cloudinary
+  - [x] User profile page with personal information
+  - [x] Multiple address management system
+  
+- [x] Product Management
+  - [x] Product creation with image upload
+  - [x] Product editing and deletion
+  - [x] User-specific product listing
+  - [x] Detailed product view page
+  - [x] Product search and filtering
+
+- [x] Shopping Cart System
+  - [x] Add to cart functionality
+  - [x] Cart quantity management
+  - [x] Real-time price updates
+  - [x] Persistent cart storage
+
+- [x] UI/UX Features
+  - [x] Responsive navigation bar
+  - [x] Form validation and error handling
+  - [x] Toast notifications for user feedback
+  - [x] Protected routes for authenticated users
+  - [x] Responsive design for all screen sizes
+
+- [x] Backend Infrastructure
+  - [x] Express server with CORS enabled
+  - [x] MongoDB integration with Mongoose
+  - [x] Cloudinary integration for image storage
+  - [x] Comprehensive error handling
+  - [x] RESTful API endpoints
 
 ## Technologies Used
 - **Backend**

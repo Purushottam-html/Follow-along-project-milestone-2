@@ -12,6 +12,7 @@ import Cart from './components/Cart';
 import ProductDetails from './components/ProductDetails';
 import Profile from './components/Profile';
 import AddressForm from './components/AddressForm';
+import Checkout from './components/Checkout';
 
 function App() {
   const [userEmail, setUserEmail] = useState(null);
@@ -94,6 +95,14 @@ function App() {
             element={
               userEmail ?
                 <AddressForm /> :
+                <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              userEmail ?
+                <Checkout /> :
                 <Navigate to="/login" replace />
             }
           />
